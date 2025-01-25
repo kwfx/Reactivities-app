@@ -1,0 +1,11 @@
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\bin\Debug\net8.0\Domain.deps.json
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\bin\Debug\net8.0\Domain.dll
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\bin\Debug\net8.0\Domain.pdb
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.dll
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\refint\Domain.dll
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\Domain.pdb
+c:\Users\kwfahmi\Desktop\LearnProjects\udemycourse\Reactivities\Domain\obj\Debug\net8.0\ref\Domain.dll
