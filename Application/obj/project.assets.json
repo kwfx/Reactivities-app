@@ -755,11 +755,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj",
+      "projectPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj",
       "packagesPath": "C:\\Users\\kwfahmi\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\obj\\",
+      "outputPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kwfahmi\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -774,11 +774,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Domain\\Domain.csproj": {
-              "projectPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Domain\\Domain.csproj"
+            "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Domain\\Domain.csproj"
             },
-            "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Persistence\\Persistence.csproj": {
-              "projectPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Persistence\\Persistence.csproj"
+            "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Persistence\\Persistence.csproj": {
+              "projectPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Persistence\\Persistence.csproj"
             }
           }
         }

@@ -2755,11 +2755,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\API.csproj",
+      "projectPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\API.csproj",
       "packagesPath": "C:\\Users\\kwfahmi\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\obj\\",
+      "outputPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kwfahmi\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2774,8 +2774,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj": {
-              "projectPath": "c:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj"
+            "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\kwfahmi\\Desktop\\LearnProjects\\udemycourse\\Reactivities\\Application\\Application.csproj"
             }
           }
         }
