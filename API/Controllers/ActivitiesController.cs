@@ -22,7 +22,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity?>> GetAcitivityById(Guid id){
-            return await Mediator.Send(new ActivityDetails.Query(){Id=id});
+            return await Mediator.Send(new DetailsActivity.Query(){Id=id});
         }
 
         [HttpPost]
@@ -37,7 +37,14 @@ namespace API.Controllers
         {
             activity.Id = id;
             await Mediator.Send(new EditActivity.Command() { Activity = activity });
-            return Ok();   
+            return Ok();
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteActivity(Guid id)
+        {
+            await Mediator.Send(new DeleteActivity.Command(){Id = id});
+            return NoContent();
         }
     }
 }

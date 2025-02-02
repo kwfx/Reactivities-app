@@ -5,7 +5,7 @@ using Persistence;
 
 namespace Application.Activities
 {
-    public class ActivityDetails
+    public class DetailsActivity
     {
         public class Query: IRequest<Activity>{
             public Guid Id { get; set;}
@@ -17,7 +17,7 @@ namespace Application.Activities
 
             public async Task<Activity> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Activities.FindAsync(request.Id, cancellationToken) ?? new Activity();
+                return await _context.Activities.FindAsync(request.Id, cancellationToken);
             }
         }
     }
