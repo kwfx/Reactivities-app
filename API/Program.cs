@@ -1,3 +1,4 @@
+using API.Extensions;
 using Application.Activities;
 using Application.Core;
 using Microsoft.EntityFrameworkCore;
@@ -6,24 +7,8 @@ using Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-var connectionString = builder.Configuration.GetConnectionString("Default") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<DataContext>(
-    opt => opt.UseMySql(connectionString, new MySqlServerVersion("8.0.35"))
-);
-
-builder.Services.AddCors(opts => opts.AddPolicy(
-        "CorsPolicy", 
-        policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:5208")
-    )
-);
-
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ListActivities.Handler).Assembly));
-builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
 
