@@ -1,4 +1,5 @@
-import { Menu, Container, Button } from 'semantic-ui-react';
+import { Menu, Container} from 'semantic-ui-react';
+import { ActivityFormModal } from '../../features/activities/form/ActivityForm';
 
 export default function NavBar(){
     return (
@@ -10,7 +11,7 @@ export default function NavBar(){
                 </Menu.Item>
                 <Menu.Item name="Activities"></Menu.Item>
                 <Menu.Item>
-                    <Button positive content="Create activity"></Button>
+                    <ActivityFormModal></ActivityFormModal>
                 </Menu.Item>
             </Container>
        </Menu> 

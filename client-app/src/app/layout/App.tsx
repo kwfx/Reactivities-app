@@ -6,6 +6,7 @@ import { IActivity } from "../models/Activity";
 import NavBar from "./NavBar";
 import ActivitiyDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import { Container } from "semantic-ui-react";
+import moment from "moment";
 
 function App() {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -14,7 +15,9 @@ function App() {
     axios
       .get<IActivity[]>("http://localhost:5208/api/activities")
       .then((response) => {
-        setActivities(response.data);
+        setActivities(response.data.map((act: IActivity) => {
+          return {...act, date: moment(act.date)}
+        }));
       });
   }, []);
 
