@@ -7,5 +7,5 @@ export interface IActivity {
     category: string;
     city: string;
     venue: string;
-    updatedAt: string;
+    updatedAt: moment.Moment;
 }

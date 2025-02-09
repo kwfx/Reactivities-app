@@ -15,8 +15,8 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import axios from "axios";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from "uuid";
+import agent from "../../../app/api/agent";
 
 const categories = [
   { key: "culture", text: "Culture", value: "culture" },
@@ -41,38 +41,28 @@ export const ActivityForm = function ({
     category: "",
     city: "",
     venue: "",
+    updatedAt: moment(),
   };
   const [activityValues, setActivityValues] = useState(intialState);
 
   const onSubmit = async function () {
-    const formattedActivityValues = {...activityValues, date: activityValues.date.toISOString()}
-    await axios.post("http://localhost:5208/api/activities", formattedActivityValues, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(function () {
-      onClickCancel();
-    })
-    .catch(function (error) {
-      if (error.response) {
-        console.log(error.response.data);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-      console.log(error.config);
-    });
+    if (activity) {
+      await agent.Activities.update(activityValues)
+        .then(onClickCancel)
+    } else {
+      await agent.Activities.add(activityValues)
+        .then(onClickCancel)
+    }
   };
 
   function onInputFieldChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-    setActivityValues({...activityValues, [name]: value})
+    setActivityValues({ ...activityValues, [name]: value });
   }
 
   function onSelectFieldChange(_event: SyntheticEvent<HTMLElement>, data: DropdownProps) {
     const name = data.name;
-    setActivityValues({...activityValues, [name]: data.value})
+    setActivityValues({ ...activityValues, [name]: data.value });
   }
 
   return (
@@ -85,12 +75,14 @@ export const ActivityForm = function ({
         defaultValue={activityValues.title}
         onChange={onInputFieldChange}
       />
-      <Label for="date" basic style={{border: "none", padding: "0 2px"}}>Date of activity</Label>
+      <Label for="date" basic style={{ border: "none", padding: "0 2px" }}>
+        Date of activity
+      </Label>
       <DatePicker
         title="Date of activity"
         name="date"
         selected={activityValues.date.toDate()}
-        onChange={(val) => setActivityValues({...activityValues, "date": moment(val)})}
+        onChange={(val) => setActivityValues({ ...activityValues, date: moment(val) })}
         dateFormat="MM/dd/yyyy h:mm aa"
         showTimeInput
       />
