@@ -1,7 +1,8 @@
 import { Button, ButtonGroup, Card } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
+import { observer } from "mobx-react-lite";
 
-export default function ActivityCard({
+export const ActivityCard = observer(function({
   activity, 
   selectActivity,
   toggleEditMode
@@ -32,4 +33,4 @@ export default function ActivityCard({
       }
     />
   );
-}
+});

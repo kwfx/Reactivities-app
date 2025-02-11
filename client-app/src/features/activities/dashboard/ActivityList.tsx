@@ -1,18 +1,17 @@
-import { Segment, Item, Button, Label } from "semantic-ui-react";
+import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
-import moment from "moment";
+import { useStore } from "../../../app/stores/Store";
 
 export default function ActivityList({
-  activities,
   selectActivity,
 }: {
-  activities: IActivity[];
   selectActivity: (id: string) => void;
 }) {
+  const {activityStore} = useStore();
   return (
     <Segment>
       <Item.Group divided>
-        {activities.map((activity: IActivity) => (
+        {activityStore.activities.map((activity: IActivity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>

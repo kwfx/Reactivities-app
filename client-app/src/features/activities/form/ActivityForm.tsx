@@ -9,6 +9,7 @@ import {
   Modal,
   ModalContent,
   ModalHeader,
+  Segment,
 } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
@@ -17,17 +18,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { v4 as uuid } from "uuid";
 import agent from "../../../app/api/agent";
+import { useStore } from "../../../app/stores/Store";
+import { observer } from "mobx-react-lite";
 
 const categories = [
   { key: "culture", text: "Culture", value: "culture" },
-  { key: "drink", text: "Drink", value: "drink" },
+  { key: "drinks", text: "Drinks", value: "drinks" },
   { key: "film", text: "Film", value: "film" },
   { key: "food", text: "Food", value: "food" },
   { key: "music", text: "Music", value: "music" },
   { key: "travel", text: "Travel", value: "travel" },
 ];
 
-export const ActivityForm = function ({
+export const ActivityForm = observer(function ({
   activity,
   onClickCancel,
 }: {
@@ -44,15 +47,16 @@ export const ActivityForm = function ({
     updatedAt: moment(),
   };
   const [activityValues, setActivityValues] = useState(intialState);
+  const { activityStore } = useStore();
 
   const onSubmit = async function () {
     if (activity) {
-      await agent.Activities.update(activityValues)
-        .then(onClickCancel)
+      await agent.Activities.update(activityValues).then(onClickCancel);
+      activityStore.setSelectedActivity(activityValues);
     } else {
-      await agent.Activities.add(activityValues)
-        .then(onClickCancel)
+      await agent.Activities.add(activityValues).then(onClickCancel);
     }
+    await activityStore.loadActivities();
   };
 
   function onInputFieldChange(event: ChangeEvent<HTMLInputElement>) {
@@ -66,58 +70,60 @@ export const ActivityForm = function ({
   }
 
   return (
-    <Form autoComplete="off" onSubmit={onSubmit}>
-      <FormInput
-        fluid
-        name="title"
-        label="Title"
-        placeholder="Activity Title"
-        defaultValue={activityValues.title}
-        onChange={onInputFieldChange}
-      />
-      <Label for="date" basic style={{ border: "none", padding: "0 2px" }}>
-        Date of activity
-      </Label>
-      <DatePicker
-        title="Date of activity"
-        name="date"
-        selected={activityValues.date.toDate()}
-        onChange={(val) => setActivityValues({ ...activityValues, date: moment(val) })}
-        dateFormat="MM/dd/yyyy h:mm aa"
-        showTimeInput
-      />
-      <FormSelect
-        defaultValue={activityValues.category}
-        name="category"
-        fluid
-        label="Category"
-        options={categories}
-        placeholder="Category"
-        onChange={onSelectFieldChange}
-      />
-      <FormInput
-        fluid
-        name="city"
-        label="City"
-        placeholder="City"
-        defaultValue={activityValues.city}
-        onChange={onInputFieldChange}
-      />
-      <FormInput
-        fluid
-        name="venue"
-        label="Venue"
-        placeholder="Venue"
-        defaultValue={activityValues.venue}
-        onChange={onInputFieldChange}
-      />
-      <ButtonGroup fluid>
-        <Button floated="left" type="submit" positive content="Submit"></Button>
-        <Button floated="right" content="Cancel" onClick={() => onClickCancel()}></Button>
-      </ButtonGroup>
-    </Form>
+    <Segment>
+      <Form autoComplete="off" onSubmit={onSubmit}>
+        <FormInput
+          fluid
+          name="title"
+          label="Title"
+          placeholder="Activity Title"
+          defaultValue={activityValues.title}
+          onChange={onInputFieldChange}
+        />
+        <Label for="date" basic style={{ border: "none", padding: "0 2px" }}>
+          Date of activity
+        </Label>
+        <DatePicker
+          title="Date of activity"
+          name="date"
+          selected={activityValues.date.toDate()}
+          onChange={(val) => setActivityValues({ ...activityValues, date: moment(val) })}
+          dateFormat="MM/dd/yyyy h:mm aa"
+          showTimeInput
+        />
+        <FormSelect
+          defaultValue={activityValues.category}
+          name="category"
+          fluid
+          label="Category"
+          options={categories}
+          placeholder="Category"
+          onChange={onSelectFieldChange}
+        />
+        <FormInput
+          fluid
+          name="city"
+          label="City"
+          placeholder="City"
+          defaultValue={activityValues.city}
+          onChange={onInputFieldChange}
+        />
+        <FormInput
+          fluid
+          name="venue"
+          label="Venue"
+          placeholder="Venue"
+          defaultValue={activityValues.venue}
+          onChange={onInputFieldChange}
+        />
+        <ButtonGroup fluid>
+          <Button floated="left" type="submit" positive content="Submit"></Button>
+          <Button floated="right" content="Cancel" onClick={() => onClickCancel()}></Button>
+        </ButtonGroup>
+      </Form>
+    </Segment>
   );
-};
+});
 
 export const ActivityFormModal = function () {
   const [open, setOpen] = useState(false);

@@ -39,8 +39,14 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  function (response) {
+  async function (response) {
     return response;
+    const myPromise = new Promise<AxiosResponse>((resolve) => {
+      setTimeout(() => {
+        resolve(response);
+      }, 500);
+    });
+    return myPromise;
   },
   function (error) {
     console.error("Response error occured ..........................");

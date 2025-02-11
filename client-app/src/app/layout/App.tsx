@@ -1,38 +1,31 @@
-import { useEffect, useState } from "react";
-import "./styles.css";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { IActivity } from "../models/Activity";
-import NavBar from "./NavBar";
-import ActivitiyDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import { Container } from "semantic-ui-react";
-import moment from "moment";
-import agent from "../api/agent";
+import ActivitiyDashboard from "../../features/activities/dashboard/ActivityDashboard";
+import { useStore } from "../stores/Store";
 import LoadingComponent from "./Loading";
+import NavBar from "./NavBar";
+import "./styles.css";
 
 function App() {
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { activityStore } = useStore();
 
   useEffect(() => {
-    agent.Activities.list()
-      .then((response) => {
-        setActivities(response.map((act: IActivity) => {
-          return {...act, date: moment(act.date)}
-        }));
-        setIsLoading(false);
-      });
-  }, []);
+    activityStore.loadActivities();
+  }, [activityStore]);
 
-  if (isLoading) return (<LoadingComponent inverted={true} content={"Loading app ...."}></LoadingComponent>)
+  if (activityStore.isLoading)
+    return <LoadingComponent inverted={true} content={"Loading app ...."}></LoadingComponent>;
 
   return (
     <>
       <NavBar></NavBar>
       <Container style={{ marginTop: "7em" }}>
-        <ActivitiyDashboard activities={activities}></ActivitiyDashboard>
+        <ActivitiyDashboard activities={activityStore.activities}></ActivitiyDashboard>
       </Container>
     </>
   );
 }
 
-export default App;
+export default observer(App)!;
