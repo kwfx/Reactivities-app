@@ -28,16 +28,16 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
-            await Mediator.Send(new CreateActivity.Command() { Activity = activity });
-            return Ok();   
+            Activity newActivity = await Mediator.Send(new CreateActivity.Command() { Activity = activity });
+            return Ok(newActivity);   
         }
 
         [HttpPut("{Id}")]
         public async Task<IActionResult> EditActivity(Guid id, Activity activity)
         {
             activity.Id = id;
-            await Mediator.Send(new EditActivity.Command() { Activity = activity });
-            return Ok();
+            Activity newActivity = await Mediator.Send(new EditActivity.Command() { Activity = activity });
+            return Ok(newActivity);
         }
 
         [HttpDelete("{Id}")]
