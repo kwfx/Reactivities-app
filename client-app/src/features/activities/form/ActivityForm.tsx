@@ -6,9 +6,6 @@ import {
   FormInput,
   FormSelect,
   Label,
-  Modal,
-  ModalContent,
-  ModalHeader,
   Segment,
 } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
@@ -17,7 +14,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { v4 as uuid } from "uuid";
-import agent from "../../../app/api/agent";
 import { useStore } from "../../../app/stores/Store";
 import { observer } from "mobx-react-lite";
 
@@ -51,12 +47,11 @@ export const ActivityForm = observer(function ({
 
   const onSubmit = async function () {
     if (activity) {
-      await agent.Activities.update(activityValues).then(onClickCancel);
-      activityStore.setSelectedActivity(activityValues);
+      await activityStore.updateActivity(activityValues);
     } else {
-      await agent.Activities.add(activityValues).then(onClickCancel);
+      await activityStore.addActivity(activityValues);
     }
-    await activityStore.loadActivities();
+    onClickCancel();
   };
 
   function onInputFieldChange(event: ChangeEvent<HTMLInputElement>) {
@@ -124,20 +119,3 @@ export const ActivityForm = observer(function ({
     </Segment>
   );
 });
-
-export const ActivityFormModal = function () {
-  const [open, setOpen] = useState(false);
-  return (
-    <Modal
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-      open={open}
-      trigger={<Button positive content="Create activity"></Button>}
-    >
-      <ModalHeader>Create an activity</ModalHeader>
-      <ModalContent>
-        <ActivityForm activity={undefined} onClickCancel={() => setOpen(false)}></ActivityForm>
-      </ModalContent>
-    </Modal>
-  );
-};

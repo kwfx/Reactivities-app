@@ -1,28 +1,70 @@
 import { makeAutoObservable } from "mobx";
-import { IActivity } from "../models/Activity";
-import agent from "../api/agent";
 import moment from "moment";
+import agent from "../api/agent";
+import { IActivity } from "../models/Activity";
 
 export default class ActivityStore {
+  activities: Map<string, IActivity> = new Map();
+  selectedActivity: IActivity | undefined = undefined;
+  isLoading: boolean = true;
+  editMode: boolean = false;
 
-    activities: IActivity[] = [];
-    selectedActivity: IActivity | undefined = undefined;
-    isLoading: boolean = true;
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    constructor() {
-        makeAutoObservable(this);
+  loadActivities = async () => {
+    this.setLoading(true);
+    let activities: Map<string, IActivity> = new Map();
+    const rawActivities = await agent.Activities.list();
+    activities = this._formatData(rawActivities).reduce((prev, act) => prev.set(act.id, act), new Map());
+    this.setActivities(activities);
+    this.setLoading(false);
+  };
+
+  deleteActivity = async (activity: IActivity) => {
+    this.setLoading(true);
+    await agent.Activities.remove(activity.id);
+    this.activities.delete(activity.id);
+    this.setActivities(new Map([...this.activities]));
+    if (this.selectedActivity?.id == activity.id) {
+      this.setSelectedActivity(undefined);
     }
+    this.setLoading(false);
+  };
 
-    loadActivities = async () => {
-        this.setLoading(true);
-        const rawActivities = await agent.Activities.list();
-        this.setActivities(rawActivities.map((act: IActivity) => {
-            return {...act, date: moment(act.date)}
-        }));
-        this.setLoading(false);
-    }
+  addActivity = async (activity: IActivity) => {
+    this.setLoading(true);
+    let newAct = await agent.Activities.add(activity);
+    newAct = this._formatData([newAct])[0];
+    this.activities.set(newAct.id, newAct);
+    this.setActivities(new Map([...this.activities]));
+    this.setSelectedActivity(newAct);
+    this.setLoading(false);
+    return newAct;
+  };
 
-    setLoading = (state: boolean) => this.isLoading = state; 
-    setActivities = (activities: IActivity[]) => this.activities = activities; 
-    setSelectedActivity = (activity: IActivity | undefined) => this.selectedActivity = activity; 
+  updateActivity = async (activity: IActivity) => {
+    this.setLoading(true);
+    let updatedAct = await agent.Activities.update(activity);
+    updatedAct = this._formatData([updatedAct])[0];
+    this.activities.set(updatedAct.id, updatedAct);
+    this.setActivities(new Map([...this.activities]));
+    this.setSelectedActivity(updatedAct);
+    this.setLoading(false);
+    return updatedAct;
+  };
+
+  _formatData = (activities: IActivity[]) => {
+    return activities.map((act: IActivity) => {
+      return { ...act, date: moment(act.date) };
+    });
+  };
+
+  setLoading = (state: boolean) => (this.isLoading = state);
+  setActivities = (activities: Map<string, IActivity>) => (this.activities = activities);
+  setSelectedActivity = (activity: IActivity | undefined) => {
+    this.selectedActivity = activity;
+  };
+  setEditMode = (state: boolean) => (this.editMode = state);
 }

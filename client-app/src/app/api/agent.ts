@@ -9,7 +9,7 @@ const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, data: object) => axios.post<T>(url, data).then(responseBody),
   put: <T>(url: string, data: object) => axios.put<T>(url, data).then(responseBody),
-  del: (url: string) => axios.get(url).then(responseBody),
+  del: (url: string) => axios.delete(url).then(responseBody),
 };
 
 const Activities = {

@@ -1,18 +1,19 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
 import { useStore } from "../../../app/stores/Store";
+import { ConfirmModal } from "../form/ConfirmModal";
+import { useState } from "react";
+import { observer } from "mobx-react-lite";
 
-export default function ActivityList({
-  selectActivity,
-}: {
-  selectActivity: (id: string) => void;
-}) {
-  const {activityStore} = useStore();
+export const ActivityList = observer(function() {
+  const { activityStore } = useStore();
+  const [todeleteActivity, setTodeleteActivity] = useState<IActivity | undefined>(undefined);
+
   return (
     <Segment>
       <Item.Group divided>
-        {activityStore.activities.map((activity: IActivity) => (
-          <Item key={activity.id}>
+        {[...activityStore.activities].map(([activityId, activity]) => (
+          <Item key={activityId}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>
               <Item.Meta>{activity.date.format("LLL")}</Item.Meta>
@@ -24,7 +25,13 @@ export default function ActivityList({
                   floated="right"
                   content="view"
                   color="blue"
-                  onClick={() => selectActivity(activity.id)}
+                  onClick={() => activityStore.setSelectedActivity(activity)}
+                ></Button>
+                <Button
+                  floated="right"
+                  content="remove"
+                  color="red"
+                  onClick={() => setTodeleteActivity(activity)}
                 ></Button>
                 <Label basic content={activity.category}></Label>
               </Item.Extra>
@@ -32,6 +39,16 @@ export default function ActivityList({
           </Item>
         ))}
       </Item.Group>
+      <ConfirmModal
+        title={"Deleting Activity"}
+        onClickYes={() => {
+          if(todeleteActivity) 
+            activityStore.deleteActivity(todeleteActivity); 
+          setTodeleteActivity(undefined);
+        }}
+        onClickNo={() => setTodeleteActivity(undefined)}
+        isOpen={todeleteActivity != undefined}
+      ></ConfirmModal>
     </Segment>
   );
-}
+});

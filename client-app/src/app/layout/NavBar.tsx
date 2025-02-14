@@ -1,5 +1,5 @@
 import { Menu, Container} from 'semantic-ui-react';
-import { ActivityFormModal } from '../../features/activities/form/ActivityForm';
+import { ActivityFormModal } from '../../features/activities/form/ActivityFormModal';
 
 export default function NavBar(){
     return (

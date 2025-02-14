@@ -1,15 +1,13 @@
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Loader, Modal } from "semantic-ui-react";
 
 export default function LoadingComponent({
-  inverted = true,
   content = "loading ...",
 }: {
-  inverted: boolean;
   content: string;
 }) {
   return (
-    <Dimmer inverted={inverted} active={true}>
+    <Modal size="mini" open={true}>
       <Loader content={content}></Loader>
-    </Dimmer>
+    </Modal>
   );
 }

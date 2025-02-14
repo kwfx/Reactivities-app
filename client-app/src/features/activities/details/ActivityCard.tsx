@@ -1,16 +1,17 @@
+import { observer } from "mobx-react-lite";
 import { Button, ButtonGroup, Card } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
-import { observer } from "mobx-react-lite";
 
 export const ActivityCard = observer(function({
   activity, 
-  selectActivity,
-  toggleEditMode
+  onClickEdit,
+  onClickCancel
 }: {
   activity: IActivity;
-  selectActivity: (id: string) => void;
-  toggleEditMode: (state: boolean) => void
+  onClickEdit: () => void
+  onClickCancel: () => void
 }) {
+
   return (
     <Card
       fluid
@@ -26,9 +27,9 @@ export const ActivityCard = observer(function({
             basic
             color="blue"
             style={{ marginRight: 2 }}
-            onClick={() => toggleEditMode(true)}
+            onClick={onClickEdit}
           ></Button>
-          <Button floated="left" content="Cancel" basic color="red" onClick={() => selectActivity("")}></Button>
+          <Button floated="left" content="Cancel" basic color="red" onClick={onClickCancel}></Button>
         </ButtonGroup>
       }
     />
