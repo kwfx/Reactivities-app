@@ -17,6 +17,7 @@ const Activities = {
   add: (activity: IActivity) => requests.post<IActivity>("/activities", activity),
   update: (activity: IActivity) => requests.put<IActivity>(`/activities/${activity.id}`, activity),
   remove: (id: string) => requests.del(`/activities/${id}`),
+  getByID: (id: string) => requests.get<IActivity>(`/activities/${id}`)
 };
 
 const agent = {

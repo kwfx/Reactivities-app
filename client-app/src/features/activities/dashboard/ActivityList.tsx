@@ -4,6 +4,7 @@ import { useStore } from "../../../app/stores/Store";
 import { ConfirmModal } from "../form/ConfirmModal";
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 export const ActivityList = observer(function() {
   const { activityStore } = useStore();
@@ -25,7 +26,7 @@ export const ActivityList = observer(function() {
                   floated="right"
                   content="view"
                   color="blue"
-                  onClick={() => activityStore.setSelectedActivity(activity)}
+                  as={Link} to={`${activity.id}`}
                 ></Button>
                 <Button
                   floated="right"

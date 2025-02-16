@@ -1,8 +1,8 @@
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import { ActivitiyDashboard } from "../../features/activities/dashboard/ActivityDashboard";
 import App from "../layout/App";
-import Home from "../../features/home/Home";
-import { ActivityFormModal } from "../../features/activities/form/ActivityFormModal";
+import Home from "../../features/pages/Home";
+import Activity from "../../features/pages/Activity";
 
 export const routes: RouteObject[] = [
   {
@@ -16,6 +16,10 @@ export const routes: RouteObject[] = [
       {
         path: "activities",
         element: <ActivitiyDashboard></ActivitiyDashboard>,
+      },
+      {
+        path: "activities/:id",
+        element: <Activity></Activity>,
       },
     ],
   },

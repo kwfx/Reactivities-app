@@ -4,6 +4,7 @@ import agent from "../api/agent";
 import { IActivity } from "../models/Activity";
 
 export default class ActivityStore {
+
   activities: Map<string, IActivity> = new Map();
   selectedActivity: IActivity | undefined = undefined;
   isLoading: boolean = true;
@@ -21,6 +22,21 @@ export default class ActivityStore {
     this.setActivities(activities);
     this.setLoading(false);
   };
+
+  async getActivityById(id: string): Promise<IActivity> {
+    this.setLoading(true);
+    let activity = this.activities.get(id);
+    if (activity) {
+      this.setLoading(false);
+      return activity;
+    }
+    else{
+      activity = await agent.Activities.getByID(id);
+      activity = this._formatData([activity])[0];
+      this.setLoading(false);
+      return activity;
+    }
+  }
 
   deleteActivity = async (activity: IActivity) => {
     this.setLoading(true);
