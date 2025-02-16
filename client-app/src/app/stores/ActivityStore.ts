@@ -37,7 +37,7 @@ export default class ActivityStore {
     this.setLoading(true);
     let newAct = await agent.Activities.add(activity);
     newAct = this._formatData([newAct])[0];
-    this.activities.set(newAct.id, newAct);
+    this.setActivity(newAct);
     this.setActivities(new Map([...this.activities]));
     this.setSelectedActivity(newAct);
     this.setLoading(false);
@@ -48,7 +48,7 @@ export default class ActivityStore {
     this.setLoading(true);
     let updatedAct = await agent.Activities.update(activity);
     updatedAct = this._formatData([updatedAct])[0];
-    this.activities.set(updatedAct.id, updatedAct);
+    this.setActivity(updatedAct);
     this.setActivities(new Map([...this.activities]));
     this.setSelectedActivity(updatedAct);
     this.setLoading(false);
@@ -62,6 +62,7 @@ export default class ActivityStore {
   };
 
   setLoading = (state: boolean) => (this.isLoading = state);
+  setActivity = (activity: IActivity) => (this.activities.set(activity.id, activity));
   setActivities = (activities: Map<string, IActivity>) => (this.activities = activities);
   setSelectedActivity = (activity: IActivity | undefined) => {
     this.selectedActivity = activity;
