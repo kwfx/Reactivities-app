@@ -3,6 +3,7 @@ import moment from "moment";
 export interface IActivity {
     id: string;
     title: string;
+    description: string;
     date: moment.Moment;
     category: string;
     city: string;

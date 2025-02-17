@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Button, ButtonGroup, Card } from "semantic-ui-react";
+import { Button, ButtonGroup, Card, Icon } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
 
 export const ActivityCard = observer(function({
@@ -18,7 +18,7 @@ export const ActivityCard = observer(function({
       image={`/assets/categoryImages/${activity.category}.jpg`}
       header={activity.title}
       meta={activity.date.format("LLL")}
-      description={activity.city + ", " + activity.venue}
+      description={activity.description}
       extra={
         <ButtonGroup widths={2}>
           <Button

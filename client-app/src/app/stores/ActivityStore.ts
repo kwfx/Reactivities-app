@@ -7,6 +7,7 @@ export default class ActivityStore {
 
   activities: Map<string, IActivity> = new Map();
   selectedActivity: IActivity | undefined = undefined;
+  todeleteActivity: IActivity | undefined = undefined;
   isLoading: boolean = true;
   editMode: boolean = false;
 
@@ -22,6 +23,25 @@ export default class ActivityStore {
     this.setActivities(activities);
     this.setLoading(false);
   };
+
+  activitiesOrderedByDate = (): IActivity[] => {
+    return [...this.activities.values()].sort((a, b) => a.date.diff(b.date))
+  }
+
+  activitiesGroupedBy = (prop: keyof IActivity) => {
+    return this.activitiesOrderedByDate().reduce((prev, value) => {
+      let propValue = value[prop];
+      if (moment.isMoment(propValue)){
+        propValue = propValue.format("YYYY-MM-DD");
+      }
+      if (!prev.has(propValue)){
+        prev.set(propValue, []);
+      }
+      prev.get(propValue)?.push(value);
+      return prev;
+      
+    }, new Map<string, Array<IActivity>>())
+  } 
 
   async getActivityById(id: string): Promise<IActivity> {
     this.setLoading(true);
@@ -41,8 +61,7 @@ export default class ActivityStore {
   deleteActivity = async (activity: IActivity) => {
     this.setLoading(true);
     await agent.Activities.remove(activity.id);
-    this.activities.delete(activity.id);
-    this.setActivities(new Map([...this.activities]));
+    this.removeActivity(activity);
     if (this.selectedActivity?.id == activity.id) {
       this.setSelectedActivity(undefined);
     }
@@ -54,7 +73,6 @@ export default class ActivityStore {
     let newAct = await agent.Activities.add(activity);
     newAct = this._formatData([newAct])[0];
     this.setActivity(newAct);
-    this.setActivities(new Map([...this.activities]));
     this.setSelectedActivity(newAct);
     this.setLoading(false);
     return newAct;
@@ -65,7 +83,6 @@ export default class ActivityStore {
     let updatedAct = await agent.Activities.update(activity);
     updatedAct = this._formatData([updatedAct])[0];
     this.setActivity(updatedAct);
-    this.setActivities(new Map([...this.activities]));
     this.setSelectedActivity(updatedAct);
     this.setLoading(false);
     return updatedAct;
@@ -79,9 +96,14 @@ export default class ActivityStore {
 
   setLoading = (state: boolean) => (this.isLoading = state);
   setActivity = (activity: IActivity) => (this.activities.set(activity.id, activity));
+  removeActivity = (activity: IActivity) => (this.activities.delete(activity.id));
   setActivities = (activities: Map<string, IActivity>) => (this.activities = activities);
   setSelectedActivity = (activity: IActivity | undefined) => {
     this.selectedActivity = activity;
   };
+  setTodeleteActivity = (activity: IActivity | undefined) => {
+    this.todeleteActivity = activity;
+  };
   setEditMode = (state: boolean) => (this.editMode = state);
+  
 }

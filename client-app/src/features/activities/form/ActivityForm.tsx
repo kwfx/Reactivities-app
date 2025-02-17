@@ -5,8 +5,10 @@ import {
   Form,
   FormInput,
   FormSelect,
+  FormTextArea,
   Label,
   Segment,
+  TextAreaProps,
 } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
@@ -36,6 +38,7 @@ export const ActivityForm = observer(function ({
   const intialState = activity ?? {
     id: uuid(),
     title: "",
+    description: "",
     date: moment(),
     category: "",
     city: "",
@@ -64,6 +67,11 @@ export const ActivityForm = observer(function ({
     setActivityValues({ ...activityValues, [name]: data.value });
   }
 
+  function onInputDescriptionChange(_event: SyntheticEvent<HTMLTextAreaElement>, data: TextAreaProps) {
+    const name = data.name;
+    setActivityValues({ ...activityValues, [name]: data.value });
+  }
+
   return (
     <Segment>
       <Form autoComplete="off" onSubmit={onSubmit}>
@@ -74,6 +82,14 @@ export const ActivityForm = observer(function ({
           placeholder="Activity Title"
           defaultValue={activityValues.title}
           onChange={onInputFieldChange}
+        />
+        <FormTextArea
+          fluid
+          name="description"
+          label="Description"
+          placeholder="Activity description"
+          defaultValue={activityValues.description}
+          onChange={onInputDescriptionChange}
         />
         <Label for="date" basic style={{ border: "none", padding: "0 2px" }}>
           Date of activity
